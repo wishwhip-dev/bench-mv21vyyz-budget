@@ -141,7 +141,7 @@ export function ExpenseTracker() {
                 </p>
               )}
             </div>
-            <div className="flex gap-6">
+            <div className="flex flex-wrap gap-x-6 gap-y-3">
               <div className="grid gap-1">
                 <CardDescription className="text-sm">Expenses</CardDescription>
                 {isLoading || !month ? (
@@ -171,7 +171,7 @@ export function ExpenseTracker() {
           </CardHeader>
         </Card>
 
-        <Card>
+        <Card className="overflow-hidden">
           <CardHeader>
             <CardTitle className="text-base">Spending by category</CardTitle>
             <CardDescription>Each category with spending, largest first.</CardDescription>
@@ -190,7 +190,7 @@ export function ExpenseTracker() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="overflow-hidden">
           <CardHeader>
             <CardTitle className="text-base">Expenses in {month ? formatMonth(month) : "…"}</CardTitle>
             {isLoading || !month ? null : (
