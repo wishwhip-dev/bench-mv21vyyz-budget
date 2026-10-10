@@ -25,8 +25,8 @@ export function SpendingChart({ expenses }: { expenses: Expense[] }) {
     totals.set(expense.category, (totals.get(expense.category) ?? 0) + expense.amountCents);
   }
   const data = [...totals.entries()]
-    .map(([id, cents]) => ({ id, label: getCategory(id).label, color: getCategory(id).color, cents }))
-    .sort((a, b) => b.cents - a.cents);
+    .map(([id, spend]) => ({ id, label: getCategory(id).label, color: getCategory(id).color, spend }))
+    .sort((a, b) => b.spend - a.spend);
 
   const config = {
     spend: { label: "Spent" },
@@ -47,12 +47,12 @@ export function SpendingChart({ expenses }: { expenses: Expense[] }) {
           interval={0}
           className="fill-muted-foreground text-xs"
         />
-        <Bar dataKey="cents" isAnimationActive={false} radius={4}>
+        <Bar dataKey="spend" isAnimationActive={false} radius={4}>
           {data.map((entry) => (
             <Cell key={entry.id} fill={entry.color} />
           ))}
           <LabelList
-            dataKey="cents"
+            dataKey="spend"
             position="top"
             formatter={(value: unknown) => formatCents(Number(value))}
             className="fill-foreground text-xs font-medium tabular-nums"
