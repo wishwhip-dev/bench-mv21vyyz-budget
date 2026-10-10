@@ -63,6 +63,12 @@ export function DataCard({ database }: { database: DatabaseHandle<{ expenses: Ex
         >
           or drop an export file here — expenses in it are added to what is here
         </FileDrop>
+        {transfer.state.kind === "imported" && (
+          <p className="text-sm text-muted-foreground">
+            Last file: {transfer.state.result.rows} {transfer.state.result.rows === 1 ? "row" : "rows"}{" "}
+            added to what was already here.
+          </p>
+        )}
         {transfer.state.kind === "error" && (
           <Alert variant="destructive">
             <AlertTitle>That did not work</AlertTitle>
