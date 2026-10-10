@@ -34,10 +34,10 @@ export function SpendingChart({ expenses }: { expenses: Expense[] }) {
   } satisfies ChartConfig;
 
   return (
-    <ChartContainer config={config} className="h-[240px] w-full">
+    <ChartContainer config={config} className="h-[240px] w-full min-w-0">
       <BarChart data={data} margin={{ top: 24, right: 4, left: 4, bottom: 0 }}>
         <ChartTooltip
-          content={<ChartTooltipContent hideLabel formatter={(value) => formatCents(Number(value) * 100)} />}
+          content={<ChartTooltipContent hideLabel formatter={(value) => formatCents(Number(value))} />}
         />
         <CartesianGrid vertical={false} />
         <XAxis
