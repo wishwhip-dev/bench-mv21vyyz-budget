@@ -39,6 +39,7 @@ export function SpendingChart({ expenses }: { expenses: Expense[] }) {
         <ChartTooltip
           content={<ChartTooltipContent hideLabel formatter={(value) => formatCents(Number(value) * 100)} />}
         />
+        <CartesianGrid vertical={false} />
         <XAxis
           dataKey="label"
           tickLine={false}
