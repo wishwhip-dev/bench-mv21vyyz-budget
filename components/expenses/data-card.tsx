@@ -33,9 +33,8 @@ export function DataCard({ database }: { database: DatabaseHandle<{ expenses: Ex
       return;
     }
     try {
-      const result = await transfer.importFromFile(file, "merge");
-      const loaded = result.tables.expenses ?? 0;
-      toast.success(`Loaded ${loaded} expense${loaded === 1 ? "" : "s"} from the file.`);
+      await transfer.importFromFile(file, "merge");
+      toast.success("Loaded the export file.");
     } catch (error) {
       toast.error(`Could not load that file: ${error instanceof Error ? error.message : "not an export of this app"}`);
     }

@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { addExpense } from "@/lib/data/expenses";
-import { CATEGORIES, getCategory } from "@/lib/categories";
+import { CATEGORIES, getCategory, isCategoryId } from "@/lib/categories";
 import { formatCents, parseAmountToCents } from "@/lib/format";
 import { formatMonth, monthId, todayKey } from "@/lib/months";
 
@@ -46,6 +46,10 @@ export function ExpenseForm({ viewedMonth }: { viewedMonth: { year: number; mont
       return;
     }
     setDateError(null);
+    if (!isCategoryId(category)) {
+      setAmountError("Pick a category.");
+      return;
+    }
     setSaving(true);
     try {
       const expense = await addExpense({ amountCents: parsed.cents, category, date: shownDate });
