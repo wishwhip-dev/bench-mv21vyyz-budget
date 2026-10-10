@@ -1,6 +1,6 @@
 "use client";
 
-import { Bar, BarChart, Cell, LabelList } from "recharts";
+import { Bar, BarChart, CartesianGrid, Cell, LabelList, XAxis } from "recharts";
 import {
   ChartContainer,
   ChartTooltip,
@@ -39,6 +39,13 @@ export function SpendingChart({ expenses }: { expenses: Expense[] }) {
         <ChartTooltip
           content={<ChartTooltipContent hideLabel formatter={(value) => formatCents(Number(value) * 100)} />}
         />
+        <XAxis
+          dataKey="label"
+          tickLine={false}
+          axisLine={false}
+          interval={0}
+          className="fill-muted-foreground text-xs"
+        />
         <Bar dataKey="cents" isAnimationActive={false} radius={4}>
           {data.map((entry) => (
             <Cell key={entry.id} fill={entry.color} />
@@ -55,5 +62,3 @@ export function SpendingChart({ expenses }: { expenses: Expense[] }) {
     </ChartContainer>
   );
 }
-
-export type { Expense };
