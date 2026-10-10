@@ -65,7 +65,7 @@ export function ExpenseTracker() {
   }, [data]);
 
   return (
-    <main className="mx-auto flex w-full max-w-2xl flex-col gap-4 px-4 py-6 sm:px-6 sm:py-10">
+    <main className="mx-auto flex w-full max-w-2xl flex-col gap-4 overflow-x-hidden px-4 py-6 sm:px-6 sm:py-10">
       <header className="grid gap-1">
         <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">Monthly spending</h1>
         <p className="text-sm text-muted-foreground">
@@ -97,24 +97,29 @@ export function ExpenseTracker() {
         </CardContent>
       </Card>
 
-      <section aria-label="Month view" className="grid gap-4">
-        <div className="flex items-center justify-between gap-2">
+      {/* Stacked with flex, not grid: a grid item refuses to shrink below its widest child, so a
+          chart measured in pixels would stretch the whole page past a phone screen. */}
+      <section aria-label="Month view" className="flex min-w-0 flex-col gap-4">
+        <div className="flex items-center gap-2">
           <Button
             type="button"
             variant="outline"
-            className="min-w-24"
+            className="shrink-0 px-3"
             disabled={!month}
             onClick={() => setViewed(month ? shiftMonth(month, -1) : null)}
           >
             ← Previous
           </Button>
-          <h2 className="text-center text-base font-semibold tabular-nums" aria-live="polite">
+          <h2
+            className="min-w-0 flex-1 text-center text-sm font-semibold leading-tight tabular-nums sm:text-base"
+            aria-live="polite"
+          >
             {month ? formatMonth(month) : "…"}
           </h2>
           <Button
             type="button"
             variant="outline"
-            className="min-w-24"
+            className="shrink-0 px-3"
             disabled={!month || isLatest}
             onClick={() => setViewed(month ? shiftMonth(month, 1) : null)}
           >
@@ -122,7 +127,9 @@ export function ExpenseTracker() {
           </Button>
         </div>
 
-        <Card>
+        {/* overflow-hidden lets each card shrink below the chart's measured pixel width instead of
+            pushing the page wider than the screen. */}
+        <Card className="overflow-hidden">
           <CardHeader className="gap-4 sm:flex-row sm:items-end sm:justify-between sm:space-y-0">
             <div className="grid gap-1">
               <CardDescription className="text-sm">Spent this month</CardDescription>
