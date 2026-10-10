@@ -202,8 +202,8 @@ export function ExpenseTracker() {
               </div>
             ) : summary.count === 0 ? (
               <p className="py-6 text-center text-sm text-muted-foreground">
-                No expenses in {formatMonth(month)} yet — the total is {formatCents(summary.totalCents)}{" "}
-                across {summary.count} expense{summary.count === 1 ? "" : "s"}.
+                No expenses in {formatMonth(month)} yet — the total so far is{" "}
+                {formatCents(summary.totalCents)}.
               </p>
             ) : (
               <ExpenseList expenses={data ?? []} />

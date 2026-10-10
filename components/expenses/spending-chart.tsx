@@ -53,7 +53,6 @@ export function SpendingChart({ expenses }: { expenses: Expense[] }) {
           <LabelList
             dataKey="cents"
             position="top"
-            isAnimationActive={false}
             formatter={(value: unknown) => formatCents(Number(value))}
             className="fill-foreground text-xs font-medium tabular-nums"
           />
