@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileDrop } from "@/components/file-drop";
+import { FileDrop, type RejectedFile } from "@/components/file-drop";
 import { useDatabaseTransfer } from "@/lib/storage/react";
 import type { DatabaseHandle, TableMap } from "@/lib/storage/database";
 import type { Expense } from "@/lib/db";
@@ -25,7 +25,7 @@ export function DataCard({ database }: { database: DatabaseHandle<{ expenses: Ex
     });
   };
 
-  const onFiles = async (files: File[], rejected: FileDropReject[]) => {
+  const onFiles = async (files: File[], rejected: RejectedFile[]) => {
     const file = files[0];
     if (!file) {
       if (rejected.length) toast.error(`Could not load ${rejected[0].file.name}: ${rejected[0].reason}.`);
@@ -33,7 +33,8 @@ export function DataCard({ database }: { database: DatabaseHandle<{ expenses: Ex
     }
     try {
       const result = await transfer.importFromFile(file, "merge");
-      toast.success(`Loaded ${result.written.expenses} expense${result.written.expenses === 1 ? "" : "s"} from the file.`);
+      const loaded = result.tables.expenses ?? 0;
+      toast.success(`Loaded ${loaded} expense${loaded === 1 ? "" : "s"} from the file.`);
     } catch (error) {
       toast.error(`Could not load that file: ${error instanceof Error ? error.message : "not an export of this app"}`);
     }
@@ -72,5 +73,3 @@ export function DataCard({ database }: { database: DatabaseHandle<{ expenses: Ex
     </Card>
   );
 }
-
-type FileDropReject = { file: File; reason: string };
